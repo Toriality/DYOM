@@ -126,7 +126,7 @@ public class DYOMHud : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         // Load assets
-        arrayOfObjects = Resources.LoadAll("Prefabs", typeof(GameObject)).Cast<GameObject>();
+        arrayOfObjects = Resources.LoadAll("Prefabs/Objects", typeof(GameObject)).Cast<GameObject>();
 
         entity.transform.Translate(player.position + player.forward * 5f);
 

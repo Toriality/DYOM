@@ -103,7 +103,6 @@ public class HUDControl : MonoBehaviour
             {
                 inputMode = true;
                 inputField.interactable = true;
-                //inputField.ActivateInputField();
                 inputField.Select();
             }
 
@@ -184,7 +183,21 @@ public class HUDControl : MonoBehaviour
                 else
                 {
                     menuStack.RemoveRange(0, menuStack.Count);
-                    Debug.Log(string.Join(", ", menuStack));
+                    dyomHudScript.ResetMenu();
+                }
+            }
+
+            if ((Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Backspace)) && isMenuActive) 
+            {
+                if (menuStack.Count > 1)
+                {
+                    menuStack.RemoveAt(menuStack.Count - 1);
+                    dyomHudScript.HandleMenu(menuStack.Last());
+                }
+                else
+                {
+                    dyomMenu.SetActive(false);
+                    isMenuActive = false;
                     dyomHudScript.ResetMenu();
                 }
             }
