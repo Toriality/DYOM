@@ -164,6 +164,18 @@ public class HUDControl : MonoBehaviour
                     + dyomHudScript.virtualCamera.transform.right * horizontalInput;
                 dyomHudScript.entity.transform.Translate(moveDirection * moveSpeed);
             }
+
+            // Return
+            if (Input.GetKey(KeyCode.F))
+            {
+                Destroy(dyomHudScript.renderedObject);
+                isMenuActive = false;
+                subtitle.SetActive(false);
+                dyomHudScript.virtualCamera.gameObject.SetActive(false);
+                menuStack.RemoveRange(0, menuStack.Count);
+                dyomHudScript.ResetMenu();
+                currentMenu = null;
+            }
         }
         else
         {

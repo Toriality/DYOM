@@ -104,7 +104,6 @@ public class DYOMHud : MonoBehaviour
         }   
     }
 
-
     public CinemachineVirtualCamera virtualCamera;
     public GameObject renderedObject;
     public IEnumerable<GameObject> arrayOfObjects;
@@ -115,6 +114,7 @@ public class DYOMHud : MonoBehaviour
     {
         entity = new GameObject("Entity");
     }
+
     private IEnumerator SpecialMenu(string name)
     {
         // Destroy past menu
@@ -128,8 +128,7 @@ public class DYOMHud : MonoBehaviour
         // Load assets
         arrayOfObjects = Resources.LoadAll("Prefabs/Objects", typeof(GameObject)).Cast<GameObject>();
 
-        entity.transform.Translate(player.position + player.forward * 5f);
-
+        entity.transform.position = player.position + player.forward * 5f;
 
         // Load first object
         renderedObject = Instantiate(
