@@ -2,6 +2,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine;
 using System.Collections;
+using Cinemachine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class DYOMHud : MonoBehaviour
 {
@@ -27,10 +30,10 @@ public class DYOMHud : MonoBehaviour
     string[] addSpecialEnvObjective = { "Cutscene", "Countdown", "Timeout", "WeatherChange", "SetTime", "NPCs Behaviour", "Adjust Timelimit", "Start Timed Section" };
     string[] cutscene = { "Static", "Linear", "Smooth", "Follow Actor", "Actor 1st Person", "Actor 3rd Person", "Follow Player", "Player 1st Person", "Person 3rd Person" };
     string[] npcsBehaviour = { "Normal Peds and Vehicles", "No Vehicles", "No Peds", "No vehicles and peds" };
-    string[] addActor = { "Ready", "Health", "Gang", "Accuracy", "Headshot", "Must Survive", "Health Bar" };
-    string[] addVehicle = { "Ready", "Health", "Must Survive", "Bullet Proof", "Explosion Proof", "Damage Proof", "Tires Invulnerable", "Locked" };
-    string[] addPickup = { "Weapon", "Health", "Armor", "Bribe", "Other" };
-    string[] addObject = { "Ready", "Move When Approached", "Move Along Path" };
+    //string[] addActor = { "Ready", "Health", "Gang", "Accuracy", "Headshot", "Must Survive", "Health Bar" };
+    //string[] addVehicle = { "Ready", "Health", "Must Survive", "Bullet Proof", "Explosion Proof", "Damage Proof", "Tires Invulnerable", "Locked" };
+    //string[] addPickup = { "Weapon", "Health", "Armor", "Bribe", "Other" };
+    //string[] addObject = { "Ready", "Move When Approached", "Move Along Path" };
 
     public void ResetMenu()
     {
@@ -61,17 +64,17 @@ public class DYOMHud : MonoBehaviour
             case "NPCs Behaviour":
                 StartCoroutine(CreateMenu(npcsBehaviour));
                 break;
-            case "Add Actor":
-                StartCoroutine(CreateMenu(addActor));
-                break;
-            case "Add Vehicle":
-                StartCoroutine(CreateMenu(addVehicle));
-                break;
-            case "Add Pickup":
-                StartCoroutine(CreateMenu(addPickup));
-                break;
+            //case "Add Actor":
+            //    StartCoroutine(CreateMenu(addActor));
+            //    break;
+           // case "Add Vehicle":
+           //     StartCoroutine(CreateMenu(addVehicle));
+           //     break;
+           // case "Add Pickup":
+           //     StartCoroutine(CreateMenu(addPickup));
+           //     break;
             case "Add Object":
-                StartCoroutine(CreateMenu(addObject));
+                StartCoroutine(SpecialMenu("addObject"));
                 break;
             case "Settings":
                 StartCoroutine(CreateMenu(settings));
@@ -99,6 +102,49 @@ public class DYOMHud : MonoBehaviour
                 StartCoroutine(CreateMenu(main));
                 break;
         }   
+    }
+
+
+    public CinemachineVirtualCamera virtualCamera;
+    public GameObject renderedObject;
+    public IEnumerable<GameObject> arrayOfObjects;
+    public Transform player;
+    public GameObject entity;
+
+    private void Start()
+    {
+        entity = new GameObject("Entity");
+    }
+    private IEnumerator SpecialMenu(string name)
+    {
+        // Destroy past menu
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        yield return new WaitForEndOfFrame();
+
+        // Load assets
+        arrayOfObjects = Resources.LoadAll("Prefabs", typeof(GameObject)).Cast<GameObject>();
+
+        entity.transform.Translate(player.position + player.forward * 5f);
+
+
+        // Load first object
+        renderedObject = Instantiate(
+            arrayOfObjects.First(),
+            player.position + player.forward * 5f,
+            player.rotation, entity.transform );
+
+        virtualCamera.transform.position = new Vector3(
+                    player.position.x + player.right.x * 3f,
+                    player.position.y + player.up.y * 1f, 
+                    player.position.z + player.forward.z * -3f);
+        virtualCamera.gameObject.SetActive(true);
+        virtualCamera.Priority = 2;
+        virtualCamera.Follow = entity.gameObject.transform;
+        virtualCamera.LookAt = entity.gameObject.transform;
     }
 
     private IEnumerator CreateMenu(string[] menu) 
