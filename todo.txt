@@ -1,0 +1,237 @@
+DYOM Roadmap
+
+Player
+	- Basic Character Control
+	- Weapon control
+	- Health and armor
+	- Money
+	- Animation control
+	- Camera styles
+
+UI
+	- Gather assets
+	- Main menu
+	- Config menu
+	- Config default DYOM properties system
+	- Hotkeys/shortcuts mapping
+	- HUD
+	- DYOM Menus interface
+	- Other interfaces
+
+Sounds
+	- Gather assets
+	- Weapon sounds configuration
+	- Ambient sounds configuration
+	- Music design
+	- Actor-related sounds configuration
+	- UI-related sounds configuration
+	- Other sounds
+	
+Level Design
+	- Gather assets
+	- World
+	- Waypoints and Navmeshes
+	- Specific scripts
+	- Playtesting
+
+Missions
+	- Mission scripting
+	- SD configuration
+	- Text file conifiguration
+	- Publish mission system
+	- Saving/loading missions system
+	- Auot-save
+	- Default mission settings
+	- Random mission from database
+
+Settings
+	- Intro texts configurations
+	- Time limit configuartion
+	- Weather and time of the day
+	- Wanted level system
+	- NPC behaviours
+	- TTS implementation
+
+Entities
+	- Selection/hide/spawn/editing systems
+
+Objectives
+	- Vehicle objectives
+	- Actor objectives
+	- Pickup objectives
+	- Checkpoint objectives
+	- Object objectives
+	- Teleport objectives
+	- Player animation objectives
+	- Phone objectives
+	- Money objectives
+	- Cutscene objectives
+	- Countdown objectives
+	- Timeout objectives
+	- Weather/time objectives
+	- NPC behaviour objectives
+	- Timelimit objectives
+
+Cameras
+	- Special menus camera configuration
+	- Static objective camera
+	- Camera waypoints
+	- Actor-based cameras
+	- Player-based objective cameras
+	- Object-based cameras
+	- Vehicle-based cameras
+
+Actors
+	- Gather assets
+	- Actor health
+	- Actor group system
+	- Actor accuracy configuration
+	- Headshot identifier
+	- Must survive system
+	- Health bar
+	- Invisible actors
+	- Actor animations configuartion
+	- Skin+weapon+anim selection
+	- Movement-related animations
+	- Vehicle-related animations
+	- Instant death animation
+	- Multiple locations animation
+	- Duplicating actors system
+
+Vehicles
+	- Gather assets
+	- Vehicle control scripts
+	- Vehicle health scripts
+	- Vehicle must survive system
+	- Bullet/Explosion/Damage proof system
+	- Tires configuration
+	- Locking system
+	- Vehicle selection
+	- Color selection
+	- Vehicle placement configuration
+	
+Pickups
+	- Gather assets
+	- Pickup scripts
+	- Pickups' graphical elements
+	- Pickup placement configuartion
+	
+Object
+	- Gather assets
+	- Object ID selection
+	- Object placement configuartion
+	- Gravity activation
+	- Movement-related configuartion
+	
+Tools
+	- Teleport to marker
+	- Teleport to objective
+	- Fly mode
+	- Spawn test vehicle
+	- Play from selected
+	- Clear all objectives/actors/etc
+	
+
+
+
+3
+5
+2
+1
+3
+2
+1
+3
+4
+2
+1
+1
+2
+1
+4
+2
+2
+7
+7
+5
+1
+10
+60
+10
+10
+10
+12
+7
+4
+7
+7
+2
+2
+4
+2
+2
+10
+20
+14
+7
+14
+8
+8
+3
+7
+2
+3
+1
+1
+7
+1
+1
+2
+3
+1
+5
+7
+14
+5
+5
+5
+5
+7
+4
+4
+4
+1
+1
+1
+10
+5
+10
+10
+1
+2
+3
+7
+14
+4
+2
+2
+4
+2
+2
+1
+3
+5
+5
+2
+2
+10
+4
+4
+2
+8
+2
+4
+2
+2
+8
+4
