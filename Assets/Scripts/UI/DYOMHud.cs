@@ -5,6 +5,7 @@ using System.Collections;
 using Cinemachine;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Net.WebRequestMethods;
 
 public class DYOMHud : MonoBehaviour
 {
@@ -165,12 +166,10 @@ public class DYOMHud : MonoBehaviour
             Button newButton = newButtonObj.GetComponent<Button>();
 
             // Configure button
-            newButtonObj.name = $"{button} Button";
+            newButtonObj.name = $"{button}";
+            newButtonObj.AddComponent<MenuButton>();
             newButtonObj.GetComponentInChildren<Text>().text = button;
             newButtonObj.GetComponentInChildren<Text>().resizeTextForBestFit = true;
-            var colors = newButton.colors;
-            colors.selectedColor = primaryColor;
-            newButton.colors = colors;
 
             // Button onClick event
             newButton.onClick.AddListener(delegate { HandleMenu(button); });
