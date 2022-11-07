@@ -5316,7 +5316,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 313901117}
-  m_LocalRotation: {x: 0.09902824, y: 0.000000034243616, z: -0.0000000034078351, w: 0.99508464}
+  m_LocalRotation: {x: 0.09902824, y: -0.000000034243616, z: 0.0000000034078351, w: 0.99508464}
   m_LocalPosition: {x: -309.81104, y: 114.64479, z: -170.89542}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -19384,7 +19384,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1103493560}
-  m_LocalRotation: {x: 0.09902824, y: 0.000000017121806, z: -0.0000000017039177, w: 0.99508464}
+  m_LocalRotation: {x: 0.09902824, y: -0.000000017121806, z: 0.0000000017039177, w: 0.99508464}
   m_LocalPosition: {x: 0, y: -0.000015258789, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -28617,6 +28617,8 @@ MonoBehaviour:
   dyom: {fileID: 1726963145}
   buttonPrefab: {fileID: 7257163839632752137, guid: 96d0331fd6846514fa10a36a4baad124,
     type: 3}
+  titlePrefab: {fileID: 8651011593072105544, guid: f941b982ce2fef14486f33c0e2d04a19,
+    type: 3}
   currentMenu: 
   virtualCamera: {fileID: 967225693}
   renderedObject: {fileID: 0}
@@ -30441,7 +30443,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826444311}
   m_LocalRotation: {x: -0.17330348, y: 0.17478704, z: 0.031268984, w: 0.9687299}
-  m_LocalPosition: {x: 0, y: -0.000015258789, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -15,6 +15,7 @@ public class DYOMHud : MonoBehaviour
 
     public GameObject dyom;
     public GameObject buttonPrefab;
+    public GameObject titlePrefab;
     public string currentMenu;
 
     string[] main = { "Mission Menu", "Settings", "Player", "Objectives", "Actors", "Vehicles", "Pickups", "Objects & Effects", "Tools" };
@@ -41,7 +42,7 @@ public class DYOMHud : MonoBehaviour
         currentMenu = null;
     }
 
-    public void HandleMenu(string name = "Main")
+    public void HandleMenu(string name = "Design Your Own Mission")
     {
         currentMenu = name;
 
@@ -158,6 +159,11 @@ public class DYOMHud : MonoBehaviour
         // Wait for the GameObjects to be totally destroyed
         yield return new WaitForEndOfFrame();
 
+        // Create title
+        GameObject title = (GameObject)Instantiate(titlePrefab, transform, false);
+        title.name = "Title Panel";
+        title.GetComponentInChildren<Text>().text = currentMenu;
+
         // Create all buttons
         foreach (var button in menu)
         {   
@@ -181,7 +187,7 @@ public class DYOMHud : MonoBehaviour
         }
 
         // Select first button
-        GameObject first = transform.GetChild(0).gameObject;
+        GameObject first = transform.GetChild(1).gameObject;
         first.GetComponent<Button>().Select();
     }
 }
