@@ -5,7 +5,6 @@ using System.Collections;
 using Cinemachine;
 using System.Collections.Generic;
 using System.Linq;
-using static System.Net.WebRequestMethods;
 
 public class DYOMHud : MonoBehaviour
 {
@@ -27,7 +26,7 @@ public class DYOMHud : MonoBehaviour
     string[] pickups = { "Add Pickup", "Edit Pickup", "Spawn Pickup", "Hide Pickup", "Delete Pickup" };
     string[] objects = { "Add Object", "Edit Object", "Spawn Object", "Hide Object", "Delete Object" };
     string[] tools = { "Teleport To Marker", "Teleport To Objective", "Fly Mode", "Spawn Test Vehicle", "Browse Interiors", "Play From Selected" };
-    string[] addObjective = { "Add Vehicle", "Add Actor", "Add Pickup", "Add Checkpoint", "Add Object", "Add Special Player Objective", "Add Special Env. Objective" };
+    string[] addObjective = { "Vehicle", "Actor", "Pickup", "Checkpoint", "Object", "Special Player Objective", "Special Env. Objective" };
     string[] addSpecialPlayerObjective = { "Teleport", "Player Animation", "Teleport To Car", "Set Wanted Level", "Remove Weapons", "Talk On Phone", "Add Money", "Subtract Money" };
     string[] addSpecialEnvObjective = { "Cutscene", "Countdown", "Timeout", "WeatherChange", "SetTime", "NPCs Behaviour", "Adjust Timelimit", "Start Timed Section" };
     string[] cutscene = { "Static", "Linear", "Smooth", "Follow Actor", "Actor 1st Person", "Actor 3rd Person", "Follow Player", "Player 1st Person", "Person 3rd Person" };
@@ -76,6 +75,7 @@ public class DYOMHud : MonoBehaviour
            //     StartCoroutine(CreateMenu(addPickup));
            //     break;
             case "Add Object":
+            case "Object":
                 StartCoroutine(SpecialMenu("addObject"));
                 break;
             case "Settings":
@@ -128,15 +128,15 @@ public class DYOMHud : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         // Load assets
-        arrayOfObjects = Resources.LoadAll("Prefabs/Objects", typeof(GameObject)).Cast<GameObject>();
+        arrayOfObjects = Resources.LoadAll("Prefabs/Objects").Cast<GameObject>().ToList();
 
         entity.transform.position = player.position + player.forward * 5f;
 
-        // Load first object
         renderedObject = Instantiate(
             arrayOfObjects.First(),
             player.position + player.forward * 5f,
             player.rotation, entity.transform );
+        
 
         virtualCamera.transform.position = new Vector3(
                     player.position.x + player.right.x * 3f,
