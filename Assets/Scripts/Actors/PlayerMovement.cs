@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float sprintSpeed;
     public float playerSpeed;
     public float groundDrag;
+    public float rotationSpeed;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -57,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Anim")]
     private Animator animator;
-    private ThirdPersonCam tpcam;
+    public ThirdPersonCam tpcam;
     public float strafeParameter;
     public Vector3 strafeParameterXZ;
 
@@ -69,15 +70,16 @@ public class PlayerMovement : MonoBehaviour
 
     public Rigidbody rb;
     public HUDControl hud;
+    public DYOMController dyomController;
 
    
     private void Start()
     {
+        
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
         animator = GetComponent<Animator>();
-        tpcam = GetComponent<ThirdPersonCam>();
         animator.applyRootMotion = false;
         
         readyToJump = true;
@@ -92,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
         // Ground Check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.4f, whatIsGround);
 
-        MyInput();
+        if (!dyomController.disablePlayerMovement) MyInput();
         SpeedControl();
         StateHandler();
 
@@ -115,12 +117,19 @@ public class PlayerMovement : MonoBehaviour
     }   
 
     private void MyInput()
-    {
-        // Block input if ther is a menu active
-        if (hud.isMenuActive) return;
-
+    { 
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
+        Vector3 viewDir = transform.position - new Vector3(tpcam.transform.position.x, transform.position.y, tpcam.transform.position.z);
+        orientation.forward = viewDir.normalized;
+
+        if (tpcam.currentStyle.ToString() == "Basic")
+        {
+            Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
+            if (inputDir != Vector3.zero)
+                transform.forward = Vector3.Slerp(transform.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
+        }
 
         // When to jump
         if (Input.GetKeyDown(jumpKey) && readyToJump && grounded)
@@ -197,7 +206,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // On ground
-        if (grounded && !hud.isMenuActive)
+        if (grounded)
            rb.AddForce(moveDirection.normalized * moveSpeed * 20f, ForceMode.Force);
 
         // In air

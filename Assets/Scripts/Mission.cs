@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Mission : MonoBehaviour
@@ -9,6 +10,7 @@ public class Mission : MonoBehaviour
     [SerializeField] private string missionAuthor;
 
     [Header("Entries Quantity")]
+    [SerializeField] private int selectedObjective;
     [SerializeField] private int numOfObjectives;
     [SerializeField] private int numOfTriggers;
     [SerializeField] private int numOfActors;
@@ -68,6 +70,8 @@ public class Mission : MonoBehaviour
         // Add to the list
         objectives.Add(objective);
         numOfObjectives = objectives.Count;
+
+        SelectObjective(id);
     }
 
     /// <summary>
@@ -89,6 +93,7 @@ public class Mission : MonoBehaviour
         objective.type = type;
         objectives.Add(objective);
         numOfObjectives = objectives.Count;
+        SelectObjective(id);
     }
         
    /// <summary>
@@ -112,5 +117,12 @@ public class Mission : MonoBehaviour
         // Add to the list
         objects.Add(objectEntity);
         numOfObjects = objects.Count;
+    }
+
+    public void SelectObjective(int id)
+    {
+        objectives[selectedObjective].isSelected = false;
+        objectives[id].isSelected = true;
+        selectedObjective = id; 
     }
 }

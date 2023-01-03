@@ -5,13 +5,12 @@ using System.Collections;
 using Cinemachine;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using Unity.VisualScripting.Dependencies.NCalc;
+using System;
 
 public class DYOMHud : MonoBehaviour
 {
-    Color primaryColor = new Color(255 / 255f, 205 / 255f, 29 / 255f);
-    Color textColor = new Color(206, 206, 206);
-    Color disabledColor = new Color(123, 0, 0);
-
     public GameObject dyom;
     public GameObject buttonPrefab;
     public GameObject titlePrefab;
@@ -31,10 +30,13 @@ public class DYOMHud : MonoBehaviour
     string[] addSpecialEnvObjective = { "Cutscene", "Countdown", "Timeout", "WeatherChange", "SetTime", "NPCs Behaviour", "Adjust Timelimit", "Start Timed Section" };
     string[] cutscene = { "Static", "Linear", "Smooth", "Follow Actor", "Actor 1st Person", "Actor 3rd Person", "Follow Player", "Player 1st Person", "Person 3rd Person" };
     string[] npcsBehaviour = { "Normal Peds and Vehicles", "No Vehicles", "No Peds", "No vehicles and peds" };
+    string[] objectProperties = { "Static", "Move Along Path", "Move When Approached" };
+    string[] objectObjective = { "Touch Object" };
     //string[] addActor = { "Ready", "Health", "Gang", "Accuracy", "Headshot", "Must Survive", "Health Bar" };
     //string[] addVehicle = { "Ready", "Health", "Must Survive", "Bullet Proof", "Explosion Proof", "Damage Proof", "Tires Invulnerable", "Locked" };
     //string[] addPickup = { "Weapon", "Health", "Armor", "Bribe", "Other" };
     //string[] addObject = { "Ready", "Move When Approached", "Move Along Path" };
+    string[] specialButtons = { "Touch Object" };
 
     public void ResetMenu()
     {
@@ -75,8 +77,16 @@ public class DYOMHud : MonoBehaviour
            //     StartCoroutine(CreateMenu(addPickup));
            //     break;
             case "Add Object":
+                StartCoroutine(SpecialMenu("addObject"));
+                break;
             case "Object":
                 StartCoroutine(SpecialMenu("addObject"));
+                break;
+            case "Object Properties":
+                StartCoroutine(CreateMenu(objectProperties));
+                break;
+            case "Object Objective":
+                StartCoroutine(CreateMenu(objectObjective));
                 break;
             case "Settings":
                 StartCoroutine(CreateMenu(settings));
@@ -104,6 +114,19 @@ public class DYOMHud : MonoBehaviour
                 StartCoroutine(CreateMenu(main));
                 break;
         }   
+    }
+
+    public HUDControl hudControl;
+    public void HandleSpecialButton(string name)
+    {
+        switch (name)
+        {
+            case "Touch Object":
+                hudControl.HUDInput(name);
+                break;
+            default:
+                break;
+        }
     }
 
     public CinemachineVirtualCamera virtualCamera;
@@ -178,7 +201,10 @@ public class DYOMHud : MonoBehaviour
             newButtonObj.GetComponentInChildren<Text>().resizeTextForBestFit = true;
 
             // Button onClick event
-            newButton.onClick.AddListener(delegate { HandleMenu(button); });
+            if (System.Array.IndexOf(specialButtons, button) != -1)
+                newButton.onClick.AddListener(delegate { HandleSpecialButton(button); });
+            else
+                newButton.onClick.AddListener(delegate { HandleMenu(button); });
 
             // Create navigation and navigation settings
             Navigation nav = newButton.GetComponent<Button>().navigation;
@@ -192,3 +218,5 @@ public class DYOMHud : MonoBehaviour
     }
 }
     
+
+

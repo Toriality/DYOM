@@ -7,7 +7,7 @@ public class Objective : MonoBehaviour
 {
     public int id;
     public string type;
-
+    public bool isSelected;
     public void Start()
     {
     }

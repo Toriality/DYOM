@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
+    //GameObject eventSystem = GameObject.Find("EventSystem");
     public Sprite selectedButton;
     public Sprite normalButton;
     Image image;
@@ -27,5 +29,10 @@ public class MenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         image.sprite = normalButton;
         text.color = Color.white;
+    }
+
+    private void OnDisable()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
     }
 }

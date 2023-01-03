@@ -22,15 +22,17 @@ public class HUDControl : MonoBehaviour
     private float moveSpeed = 0.05f;
     private bool inputMode = false;
 
-
+/*
     private void Awake()
     {
         dyomMenu.SetActive(false);
         subtitle.SetActive(false);
     }
-
+*/
     private void Update()
     {
+     
+
         if (System.Array.IndexOf(specialMenus, currentMenu) != -1)
         {
             HandleSpecialMenu();
@@ -43,7 +45,6 @@ public class HUDControl : MonoBehaviour
                 currentMenu = dyomHudScript.currentMenu;
                 if (!menuStack.Contains(currentMenu) && currentMenu != null) menuStack.Add(currentMenu);
             }
-
             // DYOM Menu Button
             if (Input.GetKeyUp(KeyCode.Y))
             {
@@ -75,6 +76,42 @@ public class HUDControl : MonoBehaviour
     }
 
     private void HandleSpecialMenu()
+    {
+        switch (dyomHudScript.currentMenu)
+        {
+            case "Add Object":
+                AddObjectMenu();
+                break;
+            case "Object":
+                AddObjectMenu();
+                break;
+        }
+    }
+
+    public void HUDInput(string name)
+    {
+        switch (name)
+        {
+            case "Touch Object":
+                mission.AddObjective(
+                    mission.GetNumOfObjectives(),
+                    "Object",
+                    dyomHudScript.renderedObject,
+                    dyomHudScript.renderedObject.transform.position,
+                    dyomHudScript.renderedObject.transform.rotation);
+                Destroy(dyomHudScript.renderedObject);
+                dyomMenu.SetActive(false);
+                isMenuActive = false;
+                subtitle.SetActive(false);
+                dyomHudScript.virtualCamera.gameObject.SetActive(false);
+                menuStack.RemoveRange(0, menuStack.Count);
+                dyomHudScript.ResetMenu();
+                currentMenu = null;
+                break;
+        }
+    }
+
+    private void AddObjectMenu()
     {
         dyomMenu.SetActive(false);
         subtitle.SetActive(true);
@@ -218,28 +255,31 @@ public class HUDControl : MonoBehaviour
         {
             if (currentMenu == "Object")
             {
-                mission.AddObjective(
-                    mission.GetNumOfObjectives(),
-                    "Object",
-                    dyomHudScript.renderedObject,
-                    dyomHudScript.renderedObject.transform.position,
-                    dyomHudScript.renderedObject.transform.rotation);
+                dyomMenu.SetActive(true);
+                subtitle.SetActive(false);
+                dyomHudScript.virtualCamera.gameObject.SetActive(false);
+                dyomHudScript.HandleMenu("Object Objective");
             }
-            else
-            {
-                 mission.AddObject(
-                    mission.GetNumOfObjects(),
-                    dyomHudScript.renderedObject,
-                    dyomHudScript.renderedObject.transform.position,
-                    dyomHudScript.renderedObject.transform.rotation);
-            }  
-            Destroy(dyomHudScript.renderedObject);
+            /* dyomHudScript.HandleMenu("Object Objective");
+             mission.AddObjective(
+                 mission.GetNumOfObjectives(),
+                 "Object",
+                 dyomHudScript.renderedObject,
+                 dyomHudScript.renderedObject.transform.position,
+                 dyomHudScript.renderedObject.transform.rotation);*/
+            else dyomHudScript.HandleMenu("Object Properties");
+                /*mission.AddObject(
+                   mission.GetNumOfObjects(),
+                   dyomHudScript.renderedObject,
+                   dyomHudScript.renderedObject.transform.position,
+                   dyomHudScript.renderedObject.transform.rotation);*/
+            /*Destroy(dyomHudScript.renderedObject);
             isMenuActive = false;
             subtitle.SetActive(false);
             dyomHudScript.virtualCamera.gameObject.SetActive(false);
             menuStack.RemoveRange(0, menuStack.Count);
             dyomHudScript.ResetMenu();
-            currentMenu = null;
+            currentMenu = null;*/
         }
 
         // Return
